@@ -23,7 +23,7 @@ const countryMap = {
   "中国香港": ["香港", "HK", "Hong Kong"],
   "中国澳门": ["澳门", "中国澳门", "MO", "Macau", "Macao"],
   "中国台湾": ["台湾", "台北", "TW", "Taiwan", "Taipei"],
-  "英国": ["英国", "UK", "United Kingdom", "London"],
+  "英国": ["英国", "UK","GB", "United Kingdom", "London"],
   "德国": ["德国", "DE", "Germany", "Frankfurt"],
   "法国": ["法国", "FR", "France", "Paris"],
   "荷兰": ["荷兰", "NL", "Netherlands", "Amsterdam"],
@@ -891,6 +891,18 @@ export default {
 										}
 
 										节点备注 = originalRemark;
+									}
+									if (节点备注.includes('账号')) {
+										//加判断是否邮箱号
+										const subName = config_JSON?.优选订阅生成?.SUBNAME || '';
+										const 账号 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(subName)
+											? subName
+											: '？未注册';
+
+										节点备注 = 节点备注.replace(
+											/账号\S*/g,
+											`${账号}`
+										);
 									}
 									// ===== 自动替换备注 =====更改1
 									// 到期时间
@@ -7099,7 +7111,7 @@ async function nginx() {
 	<html lang="zh-CN">
 	<head>
 	<meta charset="UTF-8">
-	<title>服务说明</title>
+	<title>小莫面板</title>
 	<style>
 		body {
 		margin: 0;
